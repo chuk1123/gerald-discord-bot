@@ -64,5 +64,8 @@ async def on_message(message):
             else:
                 continue
 
+    if message.content.startswith('!party'):
+        await message.channel.send('Hey! Party People!!!', file=discord.File('myers.png'))
+
 
 client.run('OTY4OTA3MzA4ODExODE2OTgx.YmlrPw.Z-EtIYiqORR2alkyemKe85f9nMY')
