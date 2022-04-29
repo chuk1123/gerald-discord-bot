@@ -28,7 +28,6 @@ def find_tasks(url):
         else:
             tasks.append([w.text, None])
 
-    tasks.pop(0)
-    tasks.pop(0)
+    tasks.pop(1)
 
     return tasks
