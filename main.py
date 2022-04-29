@@ -23,11 +23,17 @@ async def on_message(message):
         return
 
     if message.content.startswith('!newday'):
+        print(message.author)
+        print('New Day Request')
+
         global day_num
         day_num += 1
         await message.channel.send('Changed Day Number To: ' + str(day_num))
 
     if message.content.startswith('!changeday'):
+
+        print(message.author)
+        print('Change Day Request')
 
         def check(msg):
             return msg.author == message.author and msg.channel == message.channel
@@ -65,6 +71,9 @@ async def on_message(message):
                 continue
 
     if message.content.startswith('!party'):
+        print(message.author)
+        print('Party Request')
+
         await message.channel.send('Hey! Party People!!!', file=discord.File('myers.png'))
 
 
