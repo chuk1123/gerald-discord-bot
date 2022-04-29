@@ -1,3 +1,5 @@
+#Just test, does nothing for the discord bot
+
 from bs4 import BeautifulSoup
 import requests
 import re

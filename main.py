@@ -7,6 +7,7 @@ import asyncio
 
 client = discord.Client()
 day_num = 9
+
 url = 'https://iusd.instructure.com/courses/104033/pages/unit-5-day-'+str(day_num)+'-work'
 myers_messages = [
     "(☞ຈل͜ຈ)☞ Y'all are really weird!",
@@ -22,6 +23,9 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
+
+    if message.content.startswith('!newday'):
+        day_num -= 1
 
     if message.content.startswith('!hello'):
         print(message.author)
