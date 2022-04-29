@@ -26,6 +26,8 @@ async def on_message(message):
 
     if message.content.startswith('!newday'):
         day_num -= 1
+        url = 'https://iusd.instructure.com/courses/104033/pages/unit-5-day-'+str(day_num)+'-work'
+        await message.channel.send('Changed Day Number: ' + str(day_num))
 
     if message.content.startswith('!hello'):
         print(message.author)
