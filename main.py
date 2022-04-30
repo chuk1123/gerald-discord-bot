@@ -77,7 +77,6 @@ async def on_message(message):
         print('Task Request')
         tasks = find_tasks(url)
         await message.channel.send('Hey Party People!!!')
-        await message.channel.send('Today will be a very easy day!')
         await message.channel.send("Here's your tasks: ")
         for task in tasks: #Task = [Task, Link]
             await message.channel.send(task[0])
