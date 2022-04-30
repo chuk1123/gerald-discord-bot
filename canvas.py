@@ -2,20 +2,35 @@ def find_tasks(url):
 
     from bs4 import BeautifulSoup
     import requests
-    import re
     import json
 
     tasks = []
+    s = requests.Session()
 
-    cookies = 'HYO8BdYRoRad-w0DQ6wpyA+wy8ALbmRkYMIbns6DOF01oeT4hO6IX5fUEbn1tgXIZTqPBCWaBYx2BWYE24bDSlxqDBu7TbfAr-tRQtp5L08BxwfG9gDldavN-a1BMap0ZMAaFA9jxUOfHWzlB1qjZ15GEtr_QATQrgj7o_ESSgG1J7q3BEK-DWaNSUOud7paetiRmBDxbbIXwS6hLVsruccVIhjxEm6rca4B-L0KjblA5KE55WzXnN7bLw70Cn9OyABa9WUdv_HbqDk-tpyguGPZGBONJpiAbRreZWxNjOGJ94dxIjkhvK4yOAL8PpuCn_v5lVCI1hubVzMw_rtYH1GAfeemKvq13ZqUv5ZBUqir5ZT0C2SmcGBsc7veHnT9tZKZwk6xZLYPQRLU2QAJq42P71zG-3JZQZpyG3ThS1C1rI194d7War20Ru7Skip33c.0dvtwi1thsrjaF-XoXSA0kckIGE.Ym2AZQ'
+    loginurl = 'https://iusd.instructure.com/login/ldap'
+    r = s.get(loginurl)
+    temp_soup = BeautifulSoup(r.content, 'html.parser')
+    
+    auth_token = temp_soup.find('input', attrs={'name': 'authenticity_token'})['value']
+    payload = {'utf8': '✓', 
+    'authenticity_token': auth_token, 
+    'redirect_to_ssl': '1', 
+    'pseudonym_session[unique_id]': '24ChuKevin', 
+    'pseudonym_session[password]': '512190105', 
+    'pseudonym_session[remember_me]': '1'}
+
+    response = s.post(loginurl, data=payload)
+    cookies = response.cookies['canvas_session']
     
     html_text = requests.get(url, cookies={'canvas_session':cookies}).text
-
     soup = BeautifulSoup(html_text, 'html.parser')
 
     script_tag = soup.find_all('script')
-
     data = script_tag[2].text.strip()[3896:-1149]
+
+    if data == '':
+        print("COULDN'T LOG IN")
+        quit()
 
     data = json.loads(data)
     data = data['WIKI_PAGE']['body']
