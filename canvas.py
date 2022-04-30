@@ -7,8 +7,9 @@ def find_tasks(url):
 
     tasks = []
 
-    cookies={'canvas_session': "nVNkLUfpb-2uBlruR6sipw+p4Tw2zK0gG2Prvm9M8dGS6RWwjUJfqWvdCPdDk2_qmU46svfw5S3mKktmf5oOt8dCfuyywP79pdywV5TJLiEkGTUaBHVzPaP17n6DerKCE3NY6F7O5l0FIcTvRw9IsaUdQQXUh-8RixjBZe5zdZSHquI51Hjq5aT5gAn-7y4rFmfp-r-pkLWQqcGj0oOF76eX2zrXDDU-9a4clbCys7VIGhP1S9KHGdj1yp2p7c8wNBqAYgtAqQiP0o0WYVAbeLyaN5eGOVQp6v5QlKUbAV6D2NLSfst2w-csMqsAFsWEomN5AIcFxowpyEssPHJvCYyp9n6RmFHFYYosn9besUqbZ04PWgQyE71eNt-E2MBP-Eg_hhtwrOLiXyRhFTZeiVCrTBGB2LJJbOvzkWNdCc52A.ocBO-qNgVWpoaZDSFy3_fovoRNE.Ymv_zA"}
-    html_text = requests.get(url, cookies=cookies).text
+    cookies = 'HYO8BdYRoRad-w0DQ6wpyA+wy8ALbmRkYMIbns6DOF01oeT4hO6IX5fUEbn1tgXIZTqPBCWaBYx2BWYE24bDSlxqDBu7TbfAr-tRQtp5L08BxwfG9gDldavN-a1BMap0ZMAaFA9jxUOfHWzlB1qjZ15GEtr_QATQrgj7o_ESSgG1J7q3BEK-DWaNSUOud7paetiRmBDxbbIXwS6hLVsruccVIhjxEm6rca4B-L0KjblA5KE55WzXnN7bLw70Cn9OyABa9WUdv_HbqDk-tpyguGPZGBONJpiAbRreZWxNjOGJ94dxIjkhvK4yOAL8PpuCn_v5lVCI1hubVzMw_rtYH1GAfeemKvq13ZqUv5ZBUqir5ZT0C2SmcGBsc7veHnT9tZKZwk6xZLYPQRLU2QAJq42P71zG-3JZQZpyG3ThS1C1rI194d7War20Ru7Skip33c.0dvtwi1thsrjaF-XoXSA0kckIGE.Ym2AZQ'
+    
+    html_text = requests.get(url, cookies={'canvas_session':cookies}).text
 
     soup = BeautifulSoup(html_text, 'html.parser')
 
