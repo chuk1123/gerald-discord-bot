@@ -1,10 +1,40 @@
-def find_tasks(url):
+from bs4 import BeautifulSoup
+import requests
+import json
 
-    from bs4 import BeautifulSoup
-    import requests
-    import json
+def find_tasks(url, cookies):
 
     tasks = []
+    
+    html_text = requests.get(url, cookies={'canvas_session':cookies}).text
+    soup = BeautifulSoup(html_text, 'html.parser')
+
+    script_tag = soup.find_all('script')
+    data = script_tag[2].text.strip()[3896:-1149]
+    try:
+        data = json.loads(data)
+        data = data['WIKI_PAGE']['body']
+
+        soup2 = BeautifulSoup(data, 'html.parser')
+
+        work = soup2.find_all('p')
+        
+        for w in work:
+            link = w.find('a')
+            if link:
+                tasks.append([w.text, link['href']])
+            else:
+                tasks.append([w.text, None])
+
+        tasks.pop(1)
+        return tasks
+    
+    except:
+        print("Couldn't log in. Need new cookies")
+        
+    return []
+
+def find_cookies():
     s = requests.Session()
 
     loginurl = 'https://iusd.instructure.com/login/ldap'
@@ -21,31 +51,5 @@ def find_tasks(url):
 
     response = s.post(loginurl, data=payload)
     cookies = response.cookies['canvas_session']
-    
-    html_text = requests.get(url, cookies={'canvas_session':cookies}).text
-    soup = BeautifulSoup(html_text, 'html.parser')
 
-    script_tag = soup.find_all('script')
-    data = script_tag[2].text.strip()[3896:-1149]
-
-    if data == '':
-        print("COULDN'T LOG IN")
-        quit()
-
-    data = json.loads(data)
-    data = data['WIKI_PAGE']['body']
-
-    soup2 = BeautifulSoup(data, 'html.parser')
-
-    work = soup2.find_all('p')
-    
-    for w in work:
-        link = w.find('a')
-        if link:
-            tasks.append([w.text, link['href']])
-        else:
-            tasks.append([w.text, None])
-
-    tasks.pop(1)
-
-    return tasks
+    return cookies

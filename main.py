@@ -3,12 +3,13 @@ from discord.ext import commands, tasks
 from datetime import datetime, date
 import os
 import random
-from canvas import find_tasks
+from canvas import find_tasks, find_cookies
 import asyncio
 
 client = discord.Client()
 
 day_num = 9 # started on day 9
+cookies = None
 myers_messages = [
 "(☞ຈل͜ຈ)☞ Y'all are really weird!",
 "How's your weekend?",
@@ -38,6 +39,9 @@ async def before():
 
 @client.event
 async def on_message(message):
+    if message.author == client.user:
+        return
+
     if message.content.startswith('!newday'):
         print(message.author)
         print('New Day Request')
@@ -72,11 +76,16 @@ async def on_message(message):
         await message.channel.send(random.choice(myers_messages))
 
     if message.content.startswith('!tasks'):
+        global cookies
         url = 'https://iusd.instructure.com/courses/104033/pages/unit-5-day-'+str(day_num)+'-work'
         print(message.author)
         print('Task Request')
-        tasks = find_tasks(url)
-        await message.channel.send('Hey Party People!!!')
+        tasks = find_tasks(url, cookies)
+        if tasks == []:
+            print('Finding new cookies...')
+            cookies = find_cookies()
+            tasks = find_tasks(url, cookies)
+
         await message.channel.send("Here's your tasks: ")
         for task in tasks: #Task = [Task, Link]
             await message.channel.send(task[0])
