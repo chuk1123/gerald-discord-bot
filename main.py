@@ -39,9 +39,6 @@ async def before():
 
 @client.event
 async def on_message(message):
-    if message.author == client.user:
-        return
-
     if message.content.startswith('!newday'):
         print(message.author)
         print('New Day Request')
