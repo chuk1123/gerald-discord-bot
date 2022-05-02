@@ -5,6 +5,7 @@ import os
 import random
 from canvas import find_tasks, find_cookies
 import asyncio
+import pytz
 
 client = discord.Client()
 
@@ -32,7 +33,10 @@ async def daily_task():
 @daily_task.before_loop
 async def before():
     for _ in range(60*60*24):  # loop the whole day
-        if datetime.now().hour == 8:  # 24 hour format
+        utc_now = pytz.utc.localize(datetime.utcnow())
+        pst_now = utc_now.astimezone(pytz.timezone("America/Los_Angeles"))
+
+        if pst_now.hour == 8:  # 24 hour format
             print('It is 8. Time to start the loop')
             return
         await asyncio.sleep(1)# wait a second before looping again. You can make it more 
