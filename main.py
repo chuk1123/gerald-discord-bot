@@ -51,7 +51,9 @@ async def on_message(message):
     if message.content.startswith('!newday'):
         print(message.author)
         print('New Day Request')
-        
+        if day_num == None:
+            await message.channel.send('No day set yet...')
+            return
         day_num += 1
         await message.channel.send('Changed Day Number To: ' + str(day_num))
 
