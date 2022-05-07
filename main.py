@@ -9,7 +9,7 @@ import pytz
 
 client = discord.Client()
 
-day_num = None # started on day 9
+day_num = None #Initialized to none type
 cookies = None
 myers_messages = [
 "(☞ຈل͜ຈ)☞ Y'all are really weird!",
@@ -21,6 +21,10 @@ myers_messages = [
 async def on_ready():
     print('We have logged in as {0.user}'.format(client)) 
     daily_task.start()
+    if day_num == None:
+        message_channel = client.get_channel(969617708561870848)
+        user_id = "511881695029493760"
+        await message_channel.send(f"<@{user_id}> **Initialize day with !changeday**")
 
 @tasks.loop(hours=24)
 async def daily_task():
@@ -43,19 +47,17 @@ async def before():
 
 @client.event
 async def on_message(message):
+    global day_num
     if message.content.startswith('!newday'):
         print(message.author)
         print('New Day Request')
-
-        global day_num
+        
         day_num += 1
         await message.channel.send('Changed Day Number To: ' + str(day_num))
 
     if message.content.startswith('!day'):
-
-        global day_num
         if day_num != None:
-            await message.channel.send('Changed Day Number To: ' + str(day_num))
+            await message.channel.send('Day Number: ' + str(day_num))
         else:
             await message.channel.send("No day set yet...")
 
