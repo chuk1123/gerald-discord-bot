@@ -9,7 +9,7 @@ import pytz
 
 client = discord.Client()
 
-day_num = 9 # started on day 9
+day_num = None # started on day 9
 cookies = None
 myers_messages = [
 "(☞ຈل͜ຈ)☞ Y'all are really weird!",
@@ -50,6 +50,14 @@ async def on_message(message):
         global day_num
         day_num += 1
         await message.channel.send('Changed Day Number To: ' + str(day_num))
+
+    if message.content.startswith('!day'):
+
+        global day_num
+        if day_num != None:
+            await message.channel.send('Changed Day Number To: ' + str(day_num))
+        else:
+            await message.channel.send("No day set yet...")
 
     if message.content.startswith('!changeday'):
 
