@@ -6,10 +6,14 @@ import random
 from canvas import find_tasks, find_cookies
 import asyncio
 import pytz
+from helper import get_day, update_day
 
 client = discord.Client()
 
-day_num = None #Initialized to none type
+try:
+    day_num = int(get_day())
+except:
+    day_num = None #Initialized to none type
 cookies = None
 myers_messages = [
 "(☞ຈل͜ຈ)☞ Y'all are really weird!",
@@ -54,7 +58,8 @@ async def on_message(message):
         if day_num == None:
             await message.channel.send('No day set yet...')
             return
-        day_num += 1
+        day_num = int(day_num) + 1
+        update_day(day_num)
         await message.channel.send('Changed Day Number To: ' + str(day_num))
 
     if message.content.startswith('!day'):
@@ -76,6 +81,7 @@ async def on_message(message):
         msg = msg.content
         num = int(msg)
         day_num = num
+        update_day(num)
         await message.channel.send('Changed Day Number To: ' + str(day_num))
 
     if message.content.startswith('!hello'):
