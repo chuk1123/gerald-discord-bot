@@ -96,7 +96,7 @@ async def on_message(message):
 
     if message.content.startswith('!tasks'):
         global cookies
-        url = 'https://iusd.instructure.com/courses/104033/pages/unit-5-day-'+str(day_num)+'-work'
+        url = 'https://iusd.instructure.com/courses/104033/pages/capstone-project-day-'+str(day_num)+'-work'
         print(message.author)
         print('Task Request')
         tasks = find_tasks(url, cookies)
