@@ -37,6 +37,8 @@ async def daily_task():
     if week_day_num in [0, 1, 3]:
         await message_channel.send("!newday")
         await message_channel.send("!tasks")
+    if str(date.today()) == '2022-06-03':
+        await message_channel.send("I SELF DESTRUCT!!!")
 
 @daily_task.before_loop
 async def before():
