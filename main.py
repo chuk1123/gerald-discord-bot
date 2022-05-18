@@ -38,6 +38,7 @@ async def daily_task():
         await message_channel.send("!newday")
         await message_channel.send("!tasks")
     if str(date.today()) == '2022-06-03':
+        await asyncio.sleep(60)
         await message_channel.send("I SELF DESTRUCT!!!")
 
 @daily_task.before_loop
