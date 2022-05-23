@@ -56,8 +56,8 @@ async def before():
 async def on_message(message):
     global day_num
     if message.content.startswith('!newday'):
-        print(message.author)
-        print('New Day Request')
+        print(message.author, '- New Day Request')
+
         if day_num == None:
             await message.channel.send('No day set yet...')
             return
@@ -73,8 +73,8 @@ async def on_message(message):
 
     if message.content.startswith('!changeday'):
 
-        print(message.author)
-        print('Change Day Request')
+        print(message.author, 'Change Day Request')
+
 
         def check(msg):
             return msg.author == message.author and msg.channel == message.channel
@@ -88,20 +88,18 @@ async def on_message(message):
         await message.channel.send('Changed Day Number To: ' + str(day_num))
 
     if message.content.startswith('!hello'):
-        print(message.author)
-        print('Hello Request')
+        print(message.author, '- Hello Request')
         await message.channel.send('Hey Party People!')
 
     if message.content.startswith('!talk'):
-        print(message.author)
-        print('Talk Request')
+        print(message.author, '- Talk Request')
         await message.channel.send(random.choice(myers_messages))
 
     if message.content.startswith('!tasks'):
         global cookies
         url = 'https://iusd.instructure.com/courses/104033/pages/capstone-project-day-'+str(day_num)+'-work'
-        print(message.author)
-        print('Task Request')
+        print(message.author, '- Task Request')
+
         tasks = find_tasks(url, cookies)
         if tasks == []:
             print('Finding new cookies...')
@@ -117,8 +115,7 @@ async def on_message(message):
                 continue
 
     if message.content.startswith('!party'):
-        print(message.author)
-        print('Party Request')
+        print(message.author, '- Party Request')
 
         await message.channel.send('Hey! Party People!!!', file=discord.File('myers.png'))
 
