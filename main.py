@@ -26,6 +26,7 @@ async def on_ready():
 async def on_message(message):
     if message.content.startswith('!hi'):
         await message.channel.send('Hi, I am Gerald the sensational penguin!')
+    
     if message.content.startswith('!penguins') or message.content.startswith('!penguin'):
         await message.channel.send('Penguins:')
         penguins = []
