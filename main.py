@@ -38,4 +38,9 @@ async def on_message(message):
                 penguins.append(str(penguin.nick))
         await message.channel.send("\n".join(member for member in penguins))
 
+    if message.content.startswith('!talk'):
+        messages = ['hee hee hee haa']
+        await message.channel.send(messages[0])
+        await message.channel.send("<:heheheha:981746390805913670>")
+
 client.run('OTY4OTA3MzA4ODExODE2OTgx.YmlrPw.Z-EtIYiqORR2alkyemKe85f9nMY')
