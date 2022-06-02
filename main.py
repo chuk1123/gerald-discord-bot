@@ -1,41 +1,41 @@
-import discord
-from discord.ext import commands, tasks
 import os
 import random
 
+import discord
+from discord.ext import commands
+
+guild_id = '959419758560804894'
+
 intents = discord.Intents.default()
 intents.members = True
-
-client = discord.Client(intents=intents)
+bot = commands.Bot(intents=intents)
 
 def get_penguin_role(message):
     penguin_role = discord.utils.get(
     message.guild.roles, id=981439948152528986)
     return penguin_role
 
-@client.event
+@bot.event
 async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
+    print(f'We have logged in as {bot.user}')
 
-@client.event
-async def on_message(message):
-    if message.content.startswith('!hi'):
-        await message.channel.send('Hi, I am Gerald the sensational penguin!')
+@bot.slash_command(guild_ids=[guild_id], description='testing')
+async def hi(ctx):
+    await ctx.respond('Hi, I am Gerald the sensational penguin!')
+
+@bot.slash_command(guild_ids=[guild_id], description='hee hee hee haa')
+async def talk(ctx):
+    await ctx.respond('hee hee hee haa\n' + "<:heheheha:981746390805913670>")
     
-    if message.content.startswith('!penguins') or message.content.startswith('!penguin'):
-        await message.channel.send('Penguins:')
-        penguins = []
-        penguin_mem = get_penguin_role(message).members
-        for penguin in penguin_mem:
-            if penguin.nick == None:
-                penguins.append(str(penguin.name))
-            else:
-                penguins.append(str(penguin.nick))
-        await message.channel.send("\n".join(member for member in penguins))
+@bot.slash_command(guild_ids=[guild_id], description='list of penguins')
+async def penguins(ctx):
+    penguins = []
+    penguin_mem = get_penguin_role(ctx).members
+    for penguin in penguin_mem:
+        if penguin.nick == None:
+            penguins.append(str(penguin.name))
+        else:
+            penguins.append(str(penguin.nick))
+    await ctx.respond('Penguins:\n' + "\n".join(member for member in penguins))
 
-    if message.content.startswith('!talk'):
-        messages = ['hee hee hee haa']
-        await message.channel.send(messages[0])
-        await message.channel.send("<:heheheha:981746390805913670>")
-
-client.run('OTY4OTA3MzA4ODExODE2OTgx.YmlrPw.Z-EtIYiqORR2alkyemKe85f9nMY')
+bot.run('OTY4OTA3MzA4ODExODE2OTgx.GwxbBq.pd9zh_Dkn-TFG2ZMKWaOrS3pD7c4d8qsMTZyCA')
