@@ -1,12 +1,7 @@
 import discord
 from discord.ext import commands, tasks
-from datetime import datetime, date
 import os
 import random
-from canvas import find_tasks, find_cookies
-import asyncio
-import pytz
-from helper import get_day, update_day
 
 intents = discord.Intents.default()
 intents.members = True
