@@ -11,10 +11,6 @@ intents = discord.Intents.default()
 intents.members = True
 bot = commands.Bot(intents=intents)
 
-def get_role(guild, role):
-    role = discord.utils.get(guild.roles, name=role)
-    return role
-
 def get_role_options(guild):
     roles = guild.roles
     options=[]
@@ -27,22 +23,35 @@ def get_role_options(guild):
 
 @bot.event
 async def on_ready():
-    global role_options
     print(f'We have logged in as {bot.user}')
 
-@bot.slash_command(guild_ids=guild_ids)
+@bot.slash_command(guild_ids=guild_ids, description='say hi to Gerald')
 async def hi(ctx):
     await ctx.respond('Hi, I am Gerald the sensational penguin!')
 
 @bot.slash_command(guild_ids=guild_ids, description='hee hee hee haa')
-async def talk(ctx):
+async def laugh(ctx):
     await ctx.respond('hee hee hee haa\n' + "<:heheheha:981746390805913670>")
 
 @bot.slash_command(guild_ids=guild_ids, description='basketball')
 async def afishy(ctx):
     await ctx.respond('El baloncesto es el mejor deporte!')
 
-@bot.slash_command(guild_ids=guild_ids)
+@bot.slash_command(guild_ids=guild_ids, description='Gerald talks')
+async def talk(ctx):
+    messages=[
+        'You are phenomenal!',
+        'You are absolutely sensational!',
+        'Get good.',
+        "I'm hungry.",
+        "Can I eat you?",
+        "I am a penguin.",
+        '\ (•◡•) /'
+    ]
+    message = random.choice(messages)
+    await ctx.respond(message)
+
+@bot.slash_command(guild_ids=guild_ids, description='list members of role')
 async def role_members(ctx):
     guild = bot.get_guild(guild_ids[0])
     select = Select(placeholder='Choose a role', options=get_role_options(guild))
