@@ -11,6 +11,8 @@ intents = discord.Intents.default()
 intents.members = True
 bot = commands.Bot(intents=intents)
 
+hunger_level = random.randint(3, 10)
+
 def get_role_options(guild):
     roles = guild.roles
     options=[]
@@ -43,13 +45,28 @@ async def talk(ctx):
         'You are phenomenal!',
         'You are absolutely sensational!',
         'Get good.',
-        "I'm hungry.",
-        "Can I eat you?",
         "I am a penguin.",
         '\ (•◡•) /'
     ]
+    if hunger_level > 3:
+        messages.extend(["I'm hungry.", "Can I eat you?"])
     message = random.choice(messages)
     await ctx.respond(message)
+
+@bot.slash_command(guild_ids=guild_ids, description='how hungry I am')
+async def show_hunger_level(ctx):
+    await ctx.respond(f"Hunger Level: {str(hunger_level)}")
+
+@bot.slash_command(guild_ids=guild_ids, description='feed me')
+async def feed(ctx, food):
+    global hunger_level
+    food = food.lower()
+    favorite_food = ["fish", "krill", "squid", "pizza"]
+    if food in favorite_food:
+        hunger_level -= 1
+        await ctx.respond(f"I ate {food}! \nHunger Level: {hunger_level}")
+    else:
+        await ctx.respond("I don't want to eat that!")
 
 @bot.slash_command(guild_ids=guild_ids, description='list members of role')
 async def role_members(ctx):
