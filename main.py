@@ -62,6 +62,10 @@ async def feed(ctx, food):
     global hunger_level
     food = food.lower()
     favorite_food = ["fish", "krill", "squid", "pizza"]
+    if hunger_level <= 0:
+        await ctx.respond("I am full!")
+        return
+
     if food in favorite_food:
         hunger_level -= 1
         await ctx.respond(f"I ate {food}! \nHunger Level: {hunger_level}")
