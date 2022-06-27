@@ -58,7 +58,7 @@ async def show_hunger_level(ctx):
     await ctx.respond(f"Hunger Level: {str(hunger_level)}")
 
 @bot.slash_command(guild_ids=guild_ids, description='feed me')
-async def feed(ctx, food):
+async def feed(ctx, food: str):
     global hunger_level
     food = food.lower()
     favorite_food = ["fish", "krill", "squid", "pizza"]
