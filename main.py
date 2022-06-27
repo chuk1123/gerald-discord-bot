@@ -4,6 +4,8 @@ import random
 import discord
 from discord.ext import commands
 from discord.ui import Select, View
+from discord.commands import Option
+
 
 guild_ids = [959419758560804894]
 
@@ -11,7 +13,7 @@ intents = discord.Intents.default()
 intents.members = True
 bot = commands.Bot(intents=intents)
 
-hunger_level = random.randint(3, 10)
+hunger_level = random.randint(3, 8)
 
 def get_role_options(guild):
     roles = guild.roles
@@ -28,8 +30,25 @@ async def on_ready():
     print(f'We have logged in as {bot.user}')
 
 @bot.slash_command(guild_ids=guild_ids, description='say hi to Gerald')
-async def hi(ctx):
+async def hi(ctx, name=None):
     await ctx.respond('Hi, I am Gerald the sensational penguin!')
+    if name != None:
+        await ctx.respond(f'Hi {name}, I am Gerald the sensational penguin!')
+
+@bot.slash_command(guild_ids=guild_ids, description='feed me my favorite food')
+async def feed(ctx, food):
+    global hunger_level
+    food = food.lower()
+    favorite_food = ["fish", "krill", "squid", "pizza"]
+    if hunger_level <= 0:
+        await ctx.respond("I am full!")
+        return
+
+    if food in favorite_food:
+        hunger_level -= 1
+        await ctx.respond(f"I ate {food}! \nHunger Level: {hunger_level}")
+    else:
+        await ctx.respond("I don't want to eat that!")
 
 @bot.slash_command(guild_ids=guild_ids, description='hee hee hee haa')
 async def laugh(ctx):
@@ -57,21 +76,6 @@ async def talk(ctx):
 async def show_hunger_level(ctx):
     await ctx.respond(f"Hunger Level: {str(hunger_level)}")
 
-@bot.slash_command(guild_ids=guild_ids, description='feed me')
-async def feed(ctx, food):
-    global hunger_level
-    food = food.lower()
-    favorite_food = ["fish", "krill", "squid", "pizza"]
-    if hunger_level <= 0:
-        await ctx.respond("I am full!")
-        return
-
-    if food in favorite_food:
-        hunger_level -= 1
-        await ctx.respond(f"I ate {food}! \nHunger Level: {hunger_level}")
-    else:
-        await ctx.respond("I don't want to eat that!")
-
 @bot.slash_command(guild_ids=guild_ids, description='list members of role')
 async def role_members(ctx):
     guild = bot.get_guild(guild_ids[0])
@@ -97,7 +101,10 @@ async def role_members(ctx):
     await ctx.respond("Choose a role!", view=view)
     
 @bot.slash_command(guild_ids=guild_ids, name='greet', description='Greet someone!')
-async def greet(ctx, name='you'):
-    await ctx.respond(f'Hello {name}!')
+async def greet(ctx, name=''):
+    if name == '':
+        await ctx.respond('Hey!')
+    else:
+        await ctx.respond(f'Hello {name}!')
 
 bot.run('OTY4OTA3MzA4ODExODE2OTgx.GwxbBq.pd9zh_Dkn-TFG2ZMKWaOrS3pD7c4d8qsMTZyCA')
