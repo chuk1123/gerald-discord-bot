@@ -97,7 +97,7 @@ async def role_members(ctx):
     await ctx.respond("Choose a role!", view=view)
     
 @bot.slash_command(guild_ids=guild_ids, name='greet', description='Greet someone!')
-async def greet(ctx, name=''):
+async def greet(ctx, name='you'):
     await ctx.respond(f'Hello {name}!')
 
 bot.run('OTY4OTA3MzA4ODExODE2OTgx.GwxbBq.pd9zh_Dkn-TFG2ZMKWaOrS3pD7c4d8qsMTZyCA')
