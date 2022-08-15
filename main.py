@@ -108,4 +108,4 @@ async def greet(ctx, name=''):
     else:
         await ctx.respond(f'Hello {name}!')
 
-bot.run('OTY4OTA3MzA4ODExODE2OTgx.GwxbBq.pd9zh_Dkn-TFG2ZMKWaOrS3pD7c4d8qsMTZyCA')
+bot.run("OTY4OTA3MzA4ODExODE2OTgx.GQtByo.E51AD4zTxGvmT34cKejcgpX6vOBUnp7ZxU87KM")
