@@ -108,4 +108,7 @@ async def greet(ctx, name=''):
     else:
         await ctx.respond(f'Hello {name}!')
 
-bot.run("OTY4OTA3MzA4ODExODE2OTgx.GQtByo.E51AD4zTxGvmT34cKejcgpX6vOBUnp7ZxU87KM")
+with open('bot_token.txt', 'r') as f:
+    TOKEN = f.readline().strip()
+
+bot.run(TOKEN)
