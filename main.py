@@ -110,4 +110,6 @@ async def greet(ctx, name=''):
 
 TOKEN = os.environ.get("TOKEN")
 
+print("BOT TOKEN:", TOKEN)
+
 bot.run(TOKEN)
